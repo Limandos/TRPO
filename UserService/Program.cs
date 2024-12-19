@@ -1,30 +1,34 @@
+using Microsoft.EntityFrameworkCore;
 using Steeltoe.Discovery.Client;
 using Steeltoe.Discovery.Eureka;
+using Users.Domain;
+using Users.Services;
 
-namespace UserService
+namespace Users;
+
+public class Program
 {
-    public class Program
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
+        var builder = WebApplication.CreateBuilder(args);
+
+        builder.Services.AddControllers();
+        builder.Services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+        builder.Services.AddServiceDiscovery(options =>
         {
-            var builder = WebApplication.CreateBuilder(args);
+            options.UseEureka();
+        });
+        builder.Services.AddUserServices();
 
-            builder.Services.AddControllers();
-            builder.Services.AddServiceDiscovery(options =>
-            {
-                options.UseEureka();
-            });
+        var app = builder.Build();
 
-            var app = builder.Build();
+        app.UseAuthorization();
 
-            app.UseAuthorization();
+        app.MapControllerRoute(
+            name: "default",
+            pattern: "{controller=Home}/{action=Index}/{id?}"
+        );
 
-            app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}"
-            );
-
-            app.Run();
-        }
+        app.Run();
     }
 }

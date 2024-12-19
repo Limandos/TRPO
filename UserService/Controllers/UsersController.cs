@@ -1,22 +1,35 @@
 using Microsoft.AspNetCore.Mvc;
+using Users.Services;
+using Users.Services.DTO;
 
-namespace UserService.Controllers
+namespace Users.Controllers
 {
     [ApiController]
     [Route("[controller]/[action]")]
-    public class UsersController : ControllerBase
+    public class UsersController(IUserService _userService) : ControllerBase
     {
-        private readonly ILogger<UsersController> _logger;
-
-        public UsersController(ILogger<UsersController> logger)
+        [HttpGet]
+        public IEnumerable<UserDTO> GetUsers()
         {
-            _logger = logger;
+            return _userService.GetAll();
         }
 
-        [HttpGet]
-        public string GetUsers()
+        [HttpPost]
+        public UserDTO CreateUser([FromBody] UserCreateDTO userCreateDto)
         {
-            return "Hello from ASP";
+            return _userService.Create(userCreateDto);
+        }
+
+        [HttpPut]
+        public void UpdateUser([FromBody] UserDTO userDto)
+        {
+            _userService.Update(userDto);
+        }
+
+        [HttpDelete("{id}")]
+        public void DeleteUser(int id)
+        {
+            _userService.Delete(id);
         }
     }
 }
