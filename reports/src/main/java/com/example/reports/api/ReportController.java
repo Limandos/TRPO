@@ -1,8 +1,11 @@
 package com.example.reports.api;
 
-import com.example.reports.service.dto.ReportDto;
-import com.example.reports.service.ReportService;
+import com.example.reports.services.dto.ReportDto;
+import com.example.reports.services.ReportService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,8 +31,8 @@ public class ReportController {
         reportService.update(reportDto);
     }
 
-    @DeleteMapping("/deleteReport/{id}")
-    public void deleteReport(@PathVariable Long id) {
-        reportService.delete(id);
+    @DeleteMapping("/deleteReport/{reportId}")
+    public void deleteReport(@PathVariable Long reportId) {
+        reportService.delete(reportId);
     }
 }

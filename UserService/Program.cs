@@ -1,8 +1,11 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Steeltoe.Discovery.Client;
 using Steeltoe.Discovery.Eureka;
 using Users.Domain;
 using Users.Services;
+using System.Text;
 
 namespace Users;
 
@@ -20,8 +23,23 @@ public class Program
         });
         builder.Services.AddUserServices();
 
+        builder.Services.AddAuthorization();
+        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("AppSettings:JWTKey").Value))
+                };
+            });
+
         var app = builder.Build();
 
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapControllerRoute(

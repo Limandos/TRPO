@@ -2,9 +2,9 @@ spring:
   application:
     name: reports
   datasource:
-    password: 12345
     url: jdbc:postgresql://localhost:5433/micro_db
     username: postgres
+    password: 12345
   jpa:
     hibernate:
       ddl-auto: update
@@ -23,3 +23,6 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
   instance:
     hostname: localhost
+
+auth:
+  baseUrl: http://users

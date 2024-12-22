@@ -1,4 +1,4 @@
-package com.example.reports.service.dto;
+package com.example.reports.services.dto;
 
 import com.example.reports.domain.Report;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,6 +20,7 @@ public class ReportDto {
     private Integer version;
     private String name;
     private List<ReportValue> values;
+    private Long authorId;
 
     public static ReportDto fromDomain(Report report) {
         try {
@@ -30,6 +31,7 @@ public class ReportDto {
             result.version = report.getVersion();
             result.name = report.getName();
             result.values = Arrays.stream(mapper.readValue(report.getValues(), ReportValue[].class)).toList();
+            result.authorId = report.getAuthorId();
 
             return result;
         } catch (Exception e) {
@@ -45,6 +47,7 @@ public class ReportDto {
             result.setId(id);
             result.setVersion(version);
             result.setName(name);
+            result.setAuthorId(authorId);
 
             if (values == null) {
                 values = new ArrayList<>();

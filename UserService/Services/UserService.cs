@@ -5,13 +5,18 @@ namespace Users.Services;
 
 public class UserService
     (
-        IAuthorizationService _authorizationService,
+        IEncryptionService _authorizationService,
         DatabaseContext _databaseContext
     ) : IUserService
 {
     public IEnumerable<UserDTO> GetAll()
     {
         return _databaseContext.Users.Select(UserDTO.FromDomain);
+    }
+
+    public UserDTO GetById(int id)
+    {
+        return UserDTO.FromDomain(_databaseContext.Users.FirstOrDefault(u => u.Id == id) ?? throw new Exception());
     }
 
     public UserDTO Create(UserCreateDTO userCreateDto)

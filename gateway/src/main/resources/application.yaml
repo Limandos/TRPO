@@ -14,7 +14,13 @@ spring:
           uri: http://localhost:8075
           predicates:
             - Path=/users/**
+        - id: AUTH
+          uri: http://localhost:8075
+          predicates:
+            - Path=/auth/**
 eureka:
   client:
+    register-with-eureka: false
+    fetch-registry: false
     service-url:
       defaultZone: http://localhost:8761/eureka/

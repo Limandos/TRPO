@@ -5,8 +5,9 @@ public static class BuilderServicesExtensions
     public static IServiceCollection AddUserServices(this IServiceCollection services)
     {
         services
-            .AddTransient<IAuthorizationService, AuthorizationService>()
-            .AddTransient<IUserService, UserService>();
+            .AddTransient<IEncryptionService, EncryptionService>()
+            .AddTransient<IUserService, UserService>()
+            .AddTransient<IAuthService, AuthService>();
 
         return services;
     }
