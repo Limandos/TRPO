@@ -13,7 +13,10 @@ public class AuthController(IAuthService _authenticationService, IEncryptionServ
     {
         try
         {
-            return Ok(_authenticationService.Login(userLoginDto));
+            return Ok(new
+            {
+                accessToken = _authenticationService.Login(userLoginDto)
+            });
         }
         catch (Exception e)
         {

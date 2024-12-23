@@ -24,7 +24,8 @@ public class UserService
         var user = new User()
         {
             Name = userCreateDto.Name,
-            Login = userCreateDto.Login
+            Login = userCreateDto.Login,
+            Department = userCreateDto.Department
         };
 
         _authorizationService.EncryptPassword(userCreateDto.Password, out var passwordHash, out var passwordSalt);

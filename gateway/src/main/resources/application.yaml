@@ -18,6 +18,20 @@ spring:
           uri: http://localhost:8075
           predicates:
             - Path=/auth/**
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:4200"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - DELETE
+              - PUT
+              - OPTIONS
+            allow-credentials: true
 eureka:
   client:
     register-with-eureka: false

@@ -7,4 +7,6 @@ public class UserCreateDTO
     public string Login { get; set; }
 
     public string Password { get; set; }
+
+    public string Department { get; set; }
 }

@@ -16,7 +16,7 @@ namespace Users.Controllers
             return _userService.GetAll();
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [Authorize]
         public UserDTO GetUserById(int id)
         {

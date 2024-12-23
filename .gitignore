@@ -4,3 +4,6 @@
 [Bb]in
 [Dd]ebug
 [Bb]uild/
+.vscode
+node_modules
+.angular
