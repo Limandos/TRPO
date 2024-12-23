@@ -25,4 +25,4 @@ eureka:
     hostname: localhost
 
 auth:
-  baseUrl: http://users
+  baseUrl: http://localhost:8075
