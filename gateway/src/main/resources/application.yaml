@@ -11,11 +11,11 @@ spring:
           predicates:
             - Path=/reports/**
         - id: USERS
-          uri: http://users
+          uri: lb://users
           predicates:
             - Path=/users/**
         - id: AUTH
-          uri: http://users
+          uri: lb://users
           predicates:
             - Path=/auth/**
       default-filters:
