@@ -14,6 +14,7 @@ import { ReportValue } from 'src/app/models/reportValue';
 export class ReportEditComponent implements OnInit {
 [x: string]: any;
   report!: Report | undefined;
+  values: ReportValue[] = [];
   reportId: number | undefined;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private reportService: ReportService) {
@@ -27,14 +28,9 @@ export class ReportEditComponent implements OnInit {
         this.reportService.getReportById(this.reportId).subscribe({
           next: (data) => {
             this.report = data;
+            this.values = data.values;
           }
         });
-      } else {
-        this.report = {
-          name: "",
-          version: 1,
-          values: [] as ReportValue[]
-        } as Report;
       }
     })
   }
@@ -49,9 +45,9 @@ export class ReportEditComponent implements OnInit {
     }) 
   } 
 
-  save(){
+  save(name: string){
     if(this.reportId){ 
-      this.reportService.updateReport(this.report!) 
+      this.reportService.updateReport(this.reportId, name, this.values) 
         .pipe( 
           catchError(err => this.errHandler(err)) 
         ) 
@@ -60,7 +56,7 @@ export class ReportEditComponent implements OnInit {
       }); 
     } 
     else { 
-      this.reportService.createReport(this.report!) 
+      this.reportService.createReport(name, this.values) 
         .pipe( 
           catchError(err => this.errHandler(err)) 
         ) 

@@ -21,6 +21,11 @@ public class ReportController {
         return reportService.getAll();
     }
 
+    @GetMapping("/getReportById/{id}")
+    public ReportDto getReportById(@PathVariable Long id) {
+        return reportService.getById(id);
+    }
+
     @PostMapping("/createReport")
     public ReportDto createReport(@RequestBody ReportDto reportDto) {
         return reportService.create(reportDto);

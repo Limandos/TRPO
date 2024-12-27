@@ -20,6 +20,13 @@ public class ReportService {
         return reportRepository.findAll().stream().map(ReportDto::fromDomain).toList();
     }
 
+    public ReportDto getById(Long id) {
+        var report = reportRepository
+                .findReportById(id)
+                .orElseThrow(() -> new RuntimeException("Нет такого отчёта"));
+        return ReportDto.fromDomain(report);
+    }
+
     public ReportDto create(ReportDto reportDto) {
         reportDto.setVersion(1);
         var report = reportRepository.save(reportDto.toDomain());

@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {environment} from "../../environments/environment";
 import {Report} from "../models/report"
+import { ReportValue } from "../models/reportValue";
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -23,17 +24,19 @@ export class ReportService {
       return this.http.get<Report>(this.REPORTS_URL + "/getReportById/" + id);
     }
   
-    public createReport(report: Report) {
-      return this.http.post<Report>(this.REPORTS_URL + "/createReport", report, httpOptions);
+    public createReport(name: string, values: ReportValue[]) {
+      return this.http.post<Report>(this.REPORTS_URL + "/createReport", { name: name, values: values}, httpOptions);
     }
   
     deleteReport(id: number) {
       return this.http.delete(this.REPORTS_URL + "/deleteReport/" + id);
     }
   
-    updateReport(report: Report) {
+    updateReport(id: number, name: string, values: ReportValue[]) {
       return this.http.put<Report>(this.REPORTS_URL + "/updateReport", {
-        ...report
+        id: id,
+        name: name,
+        values: values
       }, httpOptions);
     }
 }

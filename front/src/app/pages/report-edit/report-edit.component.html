@@ -1,7 +1,7 @@
 <div> 
   <div> 
     <label  class=" col-form-label m-1">Название</label> 
-    <input #username class="form-control  w-25 bg-light text-dark" value="{{report?.name}}" type="text"> 
+    <input #name class="form-control  w-25 bg-light text-dark" value="{{report?.name}}" type="text"> 
   </div>
   <div> 
     <label  class=" col-form-label m-1">Версия</label> 
@@ -28,13 +28,13 @@
       </tbody> 
     </table> 
   </div>
-  <button type="button" (click)="save()" class="btn btn-warning "> 
+  <button type="button" (click)="save(name.value)" class="btn btn-warning "> 
     Сохранить 
-  </button> 
-  <button type="button" (click)="addValue()" class="btn btn-warning "> 
-    Добавить значение 
   </button> 
   <button type="button" (click)="delete()" *ngIf="reportId" class="btn btn-warning m-1"> 
     Удалить 
   </button>
+  <button type="button" (click)="addValue()" class="btn btn-warning "> 
+    Добавить значение 
+  </button> 
 </div>
