@@ -7,15 +7,15 @@ spring:
     gateway:
       routes:
         - id: REPORTS
-          uri: http://localhost:8081
+          uri: lb://reports
           predicates:
             - Path=/reports/**
         - id: USERS
-          uri: http://localhost:8075
+          uri: http://users
           predicates:
             - Path=/users/**
         - id: AUTH
-          uri: http://localhost:8075
+          uri: http://users
           predicates:
             - Path=/auth/**
       default-filters:
@@ -34,7 +34,7 @@ spring:
             allow-credentials: true
 eureka:
   client:
-    register-with-eureka: false
-    fetch-registry: false
+    register-with-eureka: true
+    fetch-registry: true
     service-url:
       defaultZone: http://localhost:8761/eureka/

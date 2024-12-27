@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Steeltoe.Discovery.Client;
+using Steeltoe.Discovery.Eureka;
 using Users.Domain;
 using Users.Services;
 using System.Text;
@@ -15,6 +17,10 @@ public class Program
 
         builder.Services.AddControllers();
         builder.Services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+        builder.Services.AddServiceDiscovery(options =>
+        {
+            options.UseEureka();
+        });
         builder.Services.AddUserServices();
 
         builder.Services.AddAuthorization();
@@ -33,11 +39,6 @@ public class Program
 
         var app = builder.Build();
 
-        app.UseCors(x => x
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .SetIsOriginAllowed(origin => true)
-                .AllowCredentials());
         app.UseAuthentication();
         app.UseAuthorization();
 
