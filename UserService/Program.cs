@@ -5,6 +5,7 @@ using Steeltoe.Discovery.Client;
 using Users.Domain;
 using Users.Services;
 using System.Text;
+using Users.Services.RabbitMQ;
 
 namespace Users;
 
@@ -32,11 +33,13 @@ public class Program
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("AppSettings:JWTKey").Value))
                 };
             });
+        builder.Services.AddTransient<IRabbitMqService, RabbitMqService>();
 
         var app = builder.Build();
 
         app.UseAuthentication();
         app.UseAuthorization();
+        app.UseMiddleware<LogginMiddleware>();
 
         app.MapControllerRoute(
             name: "default",

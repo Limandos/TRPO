@@ -38,7 +38,6 @@ public class SecurityConfig {
                 .authenticationManager(authenticationManager)
                 .securityContextRepository(contextRepository)
                 .authorizeExchange(authorizeExchangeSpec -> {
-                    //authorizeExchangeSpec.pathMatchers("/reports/**").hasRole("ADMIN");
                     authorizeExchangeSpec.anyExchange().authenticated();
                 })
                 .build();
