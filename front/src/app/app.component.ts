@@ -14,12 +14,16 @@ interface SideNavToggle {
 })
 export class AppComponent implements OnInit {
   isLoggedIn = false;
-  username?: string;
 
   constructor(private authService: AuthService) {
   }
 
   ngOnInit(): void {
     this.isLoggedIn = this.authService.isAuthenticated();
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.isLoggedIn = false;
   }
 }

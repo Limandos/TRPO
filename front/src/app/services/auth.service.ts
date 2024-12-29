@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {environment} from "../../environments/environment";
-import { CookieService } from 'ngx-cookie-service';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from "../../environments/environment";
+import { Router } from '@angular/router';
 
 const httpOptions = {
   withCredentials: true
@@ -14,7 +14,10 @@ const httpOptions = {
 export class AuthService {
   private readonly AUTH_URL = environment.gatewayUrl + "/auth";
 
-  constructor(private http: HttpClient, private cookieService: CookieService) {}
+  constructor(
+      private http: HttpClient,
+      private router: Router
+    ) {}
 
   getToken(): string | null {
     return localStorage.getItem('accessToken');
@@ -36,6 +39,7 @@ export class AuthService {
   }
 
   logout(): void {
-    this.cookieService.delete('ACCESS-TOKEN');
+    localStorage.removeItem('accessToken');
+    this.router.navigate(['/login']);
   }
 }

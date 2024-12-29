@@ -19,6 +19,7 @@ public class ReportDto {
     private Long id;
     private Integer version;
     private String name;
+    private String chapter;
     private List<ReportValue> values;
     private Long authorId;
 
@@ -30,6 +31,7 @@ public class ReportDto {
             result.id = report.getId();
             result.version = report.getVersion();
             result.name = report.getName();
+            result.chapter = report.getChapter();
             result.values = Arrays.stream(mapper.readValue(report.getValues(), ReportValue[].class)).toList();
             result.authorId = report.getAuthorId();
 
@@ -47,6 +49,7 @@ public class ReportDto {
             result.setId(id);
             result.setVersion(version);
             result.setName(name);
+            result.setChapter(chapter);
             result.setAuthorId(authorId);
 
             if (values == null) {

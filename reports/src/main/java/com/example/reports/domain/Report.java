@@ -26,6 +26,9 @@ public class Report {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "chapter", nullable = false)
+    private String chapter;
+
     @Column(name = "values", nullable = false)
     private String values;
 

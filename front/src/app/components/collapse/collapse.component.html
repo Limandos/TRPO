@@ -1,0 +1,6 @@
+<div (click)="toggle()">
+    <h4>{{ header }}</h4>
+    <div *ngIf="!collapsed">
+        <ng-content></ng-content>
+    </div>
+</div>

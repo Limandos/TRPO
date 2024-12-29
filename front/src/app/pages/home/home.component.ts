@@ -1,9 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-
-const slider_active = "slide active";
-const slider_not_active = "slide";
-
-let index = 0;
+import { Component, OnInit } from '@angular/core';
+import { Report } from '../../models/report';
+import { ReportService } from 'src/app/services/report.service';
 
 @Component({
   selector: 'app-home',
@@ -11,59 +8,39 @@ let index = 0;
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  reportsChapters: {
+    name: string,
+    reports: Report[]
+  }[] = [];
 
-  constructor() {
+  constructor(private reportService: ReportService) {
   }
-
 
   ngOnInit(): void {
-  }
 
-  public activeSlide(n: number) {
-    let slides = Array.from(document.querySelectorAll('.slide'));
-    for (let i in slides) {
-      slides[i].classList.remove('active');
-    }
-    slides[n].classList.add('active');
-  }
+    const groupByChapter = (array: any[]) => {
+      console.log(array);
+      const grouped = array.reduce((accumulator, object) => {
+        const groupKey = object.chapter;
+        let group = accumulator.find((g: { name: any; }) => g.name === groupKey);
 
-  public activeDot(n: number) {
-    let dots = Array.from(document.querySelectorAll('.dot'));
-    for (let i in dots) {
-      dots[i].classList.remove('active');
-    }
-    dots[n].classList.add('active');
-  }
+        if (!group) {
+          group = { name: groupKey, reports: [] };
+          accumulator.push(group);
+        }
 
-  public nextSlide() {
-    var slides = document.querySelectorAll('.slide')
-    if (index == slides.length - 1) {
-      index = 0;
-      this.activeSlide(index);
-      this.activeDot(index);
-    } else {
-      index++;
-      this.activeSlide(index);
-      this.activeDot(index);
-    }
-  }
+        group.reports.push(object);
+        return accumulator;
+      }, []);
+    
+      return grouped;
+    };
 
-  public prevSlide() {
-    var slides = document.querySelectorAll('.slide')
-    if (index == 0) {
-      index = slides.length - 1;
-      this.activeSlide(index);
-      this.activeDot(index);
-    } else {
-      index--;
-      this.activeSlide(index);
-      this.activeDot(index);
-    }
-  }
-
-  public changeSlide(n: number) {
-    index = n;
-    this.activeSlide(index);
-    this.activeDot(index);
+    this.reportService.getReports().subscribe({
+      next: (reports) => {
+        this.reportsChapters = groupByChapter(reports);
+        console.log(this.reportsChapters);
+      }
+    });
   }
 }

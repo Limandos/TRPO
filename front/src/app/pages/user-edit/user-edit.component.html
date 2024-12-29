@@ -1,24 +1,24 @@
 <div> 
   <div> 
-    <label  class=" col-form-label m-1">Имя пользователя</label> 
-    <input #username class="form-control  w-25 bg-light text-dark" value="{{user?.name}}" type="text"> 
+    <label class=" col-form-label m-1">Имя пользователя</label> 
+    <input [disabled]="user?.id==1" #username class="form-control  w-25 bg-light text-dark" value="{{user?.name}}" type="text"> 
   </div>
   <div [hidden]="userId"> 
-    <label  class=" col-form-label m-1">Логин</label> 
-    <input #login class="form-control  w-25 bg-light text-dark" type="text"> 
+    <label class=" col-form-label m-1">Логин</label> 
+    <input [disabled]="user?.id==1" #login class="form-control  w-25 bg-light text-dark" type="text"> 
   </div>
-  <div  [hidden]="userId"> 
+  <div [hidden]="userId"> 
     <label class=" col-form-label m-1">Пароль</label> 
     <input #password class="form-control  w-25 bg-light text-dark" type="text"> 
   </div>
   <div> 
-    <label  class=" col-form-label m-1">Департамент</label> 
-    <input #department class="form-control  w-25 bg-light text-dark" value="{{user?.department}}" type="text"> 
+    <label class=" col-form-label m-1">Департамент</label> 
+    <input [disabled]="user?.id==1" #department class="form-control  w-25 bg-light text-dark" value="{{user?.department}}" type="text"> 
   </div>
-  <button type="button" (click)="save(username.value, login.value, password.value, department.value)" class="btn btn-warning "> 
+  <button [hidden]="user?.id==1" type="button" (click)="save(username.value, login.value, password.value, department.value)" class="btn btn-warning "> 
     Сохранить 
   </button> 
-  <button type="button" (click)="delete()" *ngIf="userId" class="btn btn-warning m-1"> 
+  <button [hidden]="user?.id==1" type="button" (click)="delete()" *ngIf="userId" class="btn btn-warning m-1"> 
     Удалить 
   </button> 
 </div>
