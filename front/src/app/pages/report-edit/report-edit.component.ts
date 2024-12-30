@@ -35,42 +35,44 @@ export class ReportEditComponent implements OnInit {
     })
   }
 
-  delete(){ 
-    this.activatedRoute.params.subscribe((params) => { 
+  delete(){
+    this.activatedRoute.params.subscribe((params) => {
       this.reportId = Number(params['reportId']);
 
       this.reportService.deleteReport(this.reportId).subscribe(() => {
-        this.router.navigate(['/']) ; 
-      }); 
-    }) 
-  } 
+        this.router.navigate(['/']) ;
+      });
+    })
+  }
 
-  save(name: string){
-    if(this.reportId){ 
-      this.reportService.updateReport(this.reportId, name, this.values) 
-        .pipe( 
-          catchError(err => this.errHandler(err)) 
-        ) 
-        .subscribe(() => { 
-        this.router.navigate(['/']) ; 
-      }); 
-    } 
-    else { 
-      this.reportService.createReport(name, this.values) 
-        .pipe( 
-          catchError(err => this.errHandler(err)) 
-        ) 
-        .subscribe(() => { 
-        this.router.navigate(['/']); 
-      }); 
-    } 
-  } 
-  errHandler(error:HttpErrorResponse){ 
-    alert("Что-то пошло не так"); 
-    return throwError(() => error.message); 
+  save(name: string, chapter: string){
+    console.log(this.values);
+
+    if(this.reportId){
+      this.reportService.updateReport(this.reportId, name, chapter, this.values)
+        .pipe(
+          catchError(err => this.errHandler(err))
+        )
+        .subscribe(() => {
+        this.router.navigate(['/']) ;
+      });
+    }
+    else {
+      this.reportService.createReport(name, chapter, this.values)
+        .pipe(
+          catchError(err => this.errHandler(err))
+        )
+        .subscribe(() => {
+        this.router.navigate(['/']);
+      });
+    }
+  }
+  errHandler(error:HttpErrorResponse){
+    alert("Что-то пошло не так");
+    return throwError(() => error.message);
   }
 
   addValue() {
-    this.report?.values.push({ } as ReportValue);
+    this.values.push({ } as ReportValue);
   }
 }

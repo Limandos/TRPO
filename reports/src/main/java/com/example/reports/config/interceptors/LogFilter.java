@@ -8,7 +8,10 @@ import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 @Component
 @RequiredArgsConstructor
@@ -20,9 +23,17 @@ public class LogFilter implements WebFilter {
         var request = exchange.getRequest();
         var response = exchange.getResponse();
 
-        rabbitTemplate.convertAndSend("logQueue", String.format(
-                "%s: [%s] \"%s\" - %s",
-                new Date(), request.getMethod().name(), request.getPath().value(), response.getStatusCode().value()));
+        var locale = new Locale("fr", "FR");
+        var formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss", locale);
+        var date = formatter.format(new Date());
+
+        try {
+            rabbitTemplate.convertAndSend("logQueue", String.format(
+                    "%s: [%s] \"%s\" - %s",
+                    date, request.getMethod().name(), request.getPath().value(), response.getStatusCode().value()));
+        } catch (Exception e) {
+            System.err.println(e);
+        }
 
         return chain.filter(exchange);
     }

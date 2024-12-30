@@ -1,38 +1,44 @@
-<div>
-  <label  class=" col-form-label m-1">Название</label>
-  <input #name class="form-control  w-25 bg-light text-dark" value="{{report?.name}}" type="text">
+<div class="form m-2">
+  <div class="form-group">
+    <label for="name" class=" col-form-label m-1">Название</label>
+    <input #name class="form-control w-25 bg-light text-dark" value="{{report?.name}}" type="text" id="name">
+  </div>
+  <div class="form-group">
+    <label for="chapter" class=" col-form-label m-1">Раздел</label>
+    <input #chapter class="form-control w-25 bg-light text-dark" value="{{report?.chapter}}" type="text" id="chapter">
+  </div>
+  <div>
+    <label class="col-form-label m-1">Версия</label>
+    <span>{{report?.version}}</span>
+  </div>
+  <div>
+    <table>
+      <thead>
+      <tr>
+        <th scope="col">Параметры</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let value of values">
+        <td>
+          <label  class=" col-form-label m-1">Название параметра</label>
+          <input class="form-control  w-25 bg-light text-dark" value="{{value?.name}}" type="text">
+        </td>
+        <td>
+          <label  class=" col-form-label m-1">Значения параметра</label>
+          <input class="form-control  w-25 bg-light text-dark" value="{{value?.value}}" type="text">
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <button type="button" (click)="save(name.value, chapter.value)" class="btn btn-success m-1">
+    Сохранить
+  </button>
+  <button type="button" (click)="delete()" *ngIf="reportId" class="btn btn-danger m-1">
+    Удалить
+  </button>
+  <button type="button" (click)="addValue()" class="btn btn-secondary m-1">
+    Добавить значение
+  </button>
 </div>
-<div>
-  <label  class=" col-form-label m-1">Версия</label>
-  <input disabled class="form-control  w-25 bg-light text-dark" value="{{report?.version}}" type="number">
-</div>
-<div>
-  <table>
-    <thead>
-    <tr>
-      <th scope="col">Параметры</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let value of report?.values">
-      <td>
-        <label  class=" col-form-label m-1">Название параметра</label>
-        <input class="form-control  w-25 bg-light text-dark" value="{{value?.name}}" type="text">
-      </td>
-      <td>
-        <label  class=" col-form-label m-1">Значения параметра</label>
-        <input class="form-control  w-25 bg-light text-dark" value="{{value?.value}}" type="text">
-      </td>
-    </tr>
-    </tbody>
-  </table>
-</div>
-<button type="button" (click)="save(name.value)" class="btn btn-warning ">
-  Сохранить
-</button>
-<button type="button" (click)="delete()" *ngIf="reportId" class="btn btn-warning">
-  Удалить
-</button>
-<button type="button" (click)="addValue()" class="btn btn-warning">
-  Добавить значение
-</button>

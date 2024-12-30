@@ -10,14 +10,32 @@ spring:
           uri: lb://reports
           predicates:
             - Path=/reports/**
+          order: 1
+
         - id: USERS
           uri: lb://users
           predicates:
             - Path=/users/**
+          order: 2
+
         - id: AUTH
           uri: lb://users
           predicates:
             - Path=/auth/**
+          order: 3
+
+        - id: static_resources
+          uri: forward:/static
+          predicates:
+            - Path=/static/**
+          order: 4
+
+        - id: spa_fallback
+          uri: forward:/index.html
+          predicates:
+            - Path=/**
+          order: 5
+
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
       globalcors:

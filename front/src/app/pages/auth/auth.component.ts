@@ -38,7 +38,7 @@ export class AuthComponent {
         next: (result) => {
           this.loggingIn.emit(true);
           localStorage.setItem('accessToken', result.accessToken);
-          this.router.navigate(['/home'], { relativeTo: this.route })
+          this.router.navigate(['/'], { relativeTo: this.route })
             .then(() => console.log('Navigation successful', this.route))
             .catch(err => console.error('Navigation failed:', err));
         },

@@ -31,7 +31,4 @@ public class Report {
 
     @Column(name = "values", nullable = false)
     private String values;
-
-    @Column(name = "author_id")
-    private Long authorId;
 }

@@ -35,15 +35,12 @@ export class AuthInterceptor implements HttpInterceptor {
 
     return next.handle(request).pipe(
       tap(
-          (event) => {
-              if (event instanceof HttpResponse)
-                  console.log('Server response');
-          },
+          () => {},
           (err) => {
               if (err instanceof HttpErrorResponse) {
                   if (err.status == 401) {
                     localStorage.removeItem('accessToken');
-                      this.router.navigate(['/login']);
+                    this.router.navigate(['/login']);
                   }
               }
           }

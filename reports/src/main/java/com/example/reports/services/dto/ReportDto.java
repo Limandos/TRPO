@@ -21,7 +21,6 @@ public class ReportDto {
     private String name;
     private String chapter;
     private List<ReportValue> values;
-    private Long authorId;
 
     public static ReportDto fromDomain(Report report) {
         try {
@@ -33,7 +32,6 @@ public class ReportDto {
             result.name = report.getName();
             result.chapter = report.getChapter();
             result.values = Arrays.stream(mapper.readValue(report.getValues(), ReportValue[].class)).toList();
-            result.authorId = report.getAuthorId();
 
             return result;
         } catch (Exception e) {
@@ -50,7 +48,6 @@ public class ReportDto {
             result.setVersion(version);
             result.setName(name);
             result.setChapter(chapter);
-            result.setAuthorId(authorId);
 
             if (values == null) {
                 values = new ArrayList<>();

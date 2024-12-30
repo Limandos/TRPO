@@ -6,5 +6,4 @@ export interface Report {
   name: string;
   chapter: string;
   values: ReportValue[];
-  authorId: number;
 }

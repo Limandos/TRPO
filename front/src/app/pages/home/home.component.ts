@@ -19,7 +19,6 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
 
     const groupByChapter = (array: any[]) => {
-      console.log(array);
       const grouped = array.reduce((accumulator, object) => {
         const groupKey = object.chapter;
         let group = accumulator.find((g: { name: any; }) => g.name === groupKey);
@@ -32,14 +31,13 @@ export class HomeComponent implements OnInit {
         group.reports.push(object);
         return accumulator;
       }, []);
-    
+
       return grouped;
     };
 
     this.reportService.getReports().subscribe({
       next: (reports) => {
         this.reportsChapters = groupByChapter(reports);
-        console.log(this.reportsChapters);
       }
     });
   }

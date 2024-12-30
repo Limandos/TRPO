@@ -1,6 +1,7 @@
-<div (click)="toggle()">
-    <h4>{{ header }}</h4>
-    <div *ngIf="!collapsed">
-        <ng-content></ng-content>
-    </div>
+<div (click)="toggle()" style="display: inline-flex;">
+    <i [ngClass]="collapsed ? 'fa fa-solid fa-caret-right' : 'fa fa-solid fa-caret-down'" style="margin-right: 5px;"></i>
+    <h4 style="cursor: pointer;">{{ header }}</h4>
+</div>
+<div *ngIf="!collapsed">
+    <ng-content></ng-content>
 </div>

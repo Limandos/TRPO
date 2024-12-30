@@ -32,49 +32,49 @@ export class UserEditComponent implements OnInit {
     })
   }
 
-  delete(){ 
-    this.activatedRoute.params.subscribe((params) => { 
+  delete(){
+    this.activatedRoute.params.subscribe((params) => {
       this.userId = Number(params['userId']);
 
       this.userService.deleteUser(this.userId).subscribe(() => {
-        this.router.navigate(['/']) ; 
-      }); 
-    }) 
-  } 
+        this.router.navigate(['/users']) ;
+      });
+    })
+  }
 
-  save(name: string, login: string, password: string, department: string){ 
-    if(!(name)) { 
-      alert("Вы указали не все данные") 
-      return; 
+  save(name: string, login: string, password: string, department: string){
+    if(!(name)) {
+      alert("Вы указали не все данные")
+      return;
     }
 
-    let user = { 
-      id: this.user?.id, 
+    let user = {
+      id: this.user?.id,
       name: name,
       department: department
     } as User;
 
-    if(this.userId){ 
-      this.userService.updateUser(user) 
-        .pipe( 
-          catchError(err => this.errHandler(err)) 
-        ) 
-        .subscribe(() => { 
-        this.router.navigate(['/']) ; 
-      }); 
-    } 
-    else { 
-      this.userService.createUser(name, login, password, department) 
-        .pipe( 
-          catchError(err => this.errHandler(err)) 
-        ) 
-        .subscribe(() => { 
-        this.router.navigate(['/']); 
-      }); 
-    } 
-  } 
-  errHandler(error:HttpErrorResponse){ 
-    alert("Что-то пошло не так"); 
-    return throwError(() => error.message); 
+    if(this.userId){
+      this.userService.updateUser(user)
+        .pipe(
+          catchError(err => this.errHandler(err))
+        )
+        .subscribe(() => {
+        this.router.navigate(['/users']) ;
+      });
+    }
+    else {
+      this.userService.createUser(name, login, password, department)
+        .pipe(
+          catchError(err => this.errHandler(err))
+        )
+        .subscribe(() => {
+        this.router.navigate(['/users']);
+      });
+    }
+  }
+  errHandler(error:HttpErrorResponse){
+    alert("Что-то пошло не так");
+    return throwError(() => error.message);
   }
 }
